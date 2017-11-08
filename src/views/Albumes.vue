@@ -1,17 +1,18 @@
 <template>
   <div>
     {{ texto }}
-		
-    <div v-for="(dato, key, value) in datos">
-			<p>{{ dato.id }} </p>
-			<p>Cantante: {{ dato.artists[0].name }} </p>
-			<p>Nombre de la canción: {{ dato.name }} </p>
-			<p>Duración: {{ secondsToTime(dato.duration_ms) }}</p>
-			<a :href="dato.preview_url" target="_blank">Escuchar online</a>
-			
-    	
-    </div>
-		
+    <input type="search" v-model="item">
+		<div id="albumes">
+      <ol>
+        <li v-for="(dato, key, value) in datos">
+					<p>{{ dato.id }} </p>
+					<p>Cantante: {{ dato.artists[0].name }} </p>
+					<p>Nombre de la canción: {{ dato.name }} </p>
+					<p>Duración: {{ secondsToTime(dato.duration_ms) }}</p>
+					<a :href="dato.preview_url" target="_blank">Escuchar online</a>									    
+			  </li>
+			</ol>
+		</div>		
   </div>
 </template>
 
@@ -50,7 +51,8 @@ export default {
     return {
       texto: 'Albumes',
       spotify: null,
-      datos: { }
+      datos: {},
+      item: null,
     }
   },
   methods: {
@@ -73,11 +75,24 @@ export default {
 		}
   },
   computed : {
-  	
+
   }
 }
 </script>
 
 <style lang="scss">
+  #albumes{
+    padding: 5px;
+    li{
+      margin-top: 10px;
+      width: 30%;
+      min-height: 50px;
+      border: 1px solid #000;
+      border-radius: 5px;
+      backgroung: #eee;
+      padding: 20px;
+      overflow: hidden;
+    }
 
+  }
 </style>

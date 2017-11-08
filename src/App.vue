@@ -6,8 +6,11 @@
     </router-link>
     <h1>{{ msg }}</h1>
     <ul>
-      <li><router-link to="/login">Login</router-link></li>
+      <!--
+      <li><router-link to="/albumes">Abumes</router-link></li>        
+      <li><router-link to="/login">Abumes</router-link></li>
       <li><router-link to="/register">Register</router-link></li>
+      -->
     </ul>
     
     <router-view></router-view>
