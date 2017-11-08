@@ -2,6 +2,7 @@
   <div id="app">
     <router-link to="/">
       <img src="./assets/logo.png" width="40">
+      
     </router-link>
     <h1>{{ msg }}</h1>
     <ul>
