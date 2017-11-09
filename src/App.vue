@@ -5,16 +5,15 @@
       <img src="./assets/logo.png" width="40">      
     </router-link>
     <h1>{{ msg }}</h1>
-    <ul>
-     
+    <!--
+    <ul>      
       <li><router-link to="/albumes">Albumes</router-link></li>        
-      <li><router-link to="/login">Login</router-link></li>        
-      <!--
+      <li><router-link to="/login">Login</router-link></li>              
       <li><router-link to="/login">Abumes</router-link></li>
       <li><router-link to="/register">Register</router-link></li>
-      -->
+      
     </ul>
-
+    -->
     <router-view></router-view>
 
   

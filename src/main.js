@@ -1,13 +1,21 @@
 import Vue from 'vue'
+
 import VueRouter from 'vue-router'
+Vue.use(VueRouter);
+
 import App from './App.vue'
+
+import BootstrapVue from 'bootstrap-vue';
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+Vue.use(BootstrapVue);
 
 import Login from './views/Login.vue'
 import Register from './views/Register.vue'
 import Albumes from './views/Albumes.vue'
 
 
-Vue.use(VueRouter);
+
 
 const routes = [  
   //{path: '/albumes' , component: Albumes},
@@ -25,17 +33,14 @@ Vue.component('login', Login);
 Vue.component('modal', {
   template: `
 		<transition name="modal">
-		    <div class="modal-mask">
+		  <div class="modal-mask">
 	      <div class="modal-wrapper">
 	        <div class="modal-container">
 
-	          <div class="modal-header">
-	          	<button class="modal-default-button" v-on:click="$emit('close')">
-	              X
-	            </button>
+	          <div class="modal-header">	          	
 	            <slot name="header">
 	              default header
-	            </slot>
+	            </slot>	            
 	          </div>
 
 	          <div class="modal-body">
@@ -45,11 +50,12 @@ Vue.component('modal', {
 	          </div>
 
 	          <div class="modal-footer">
-
 	            <slot name="footer">
-	              default footer
-	              
-	            </slot>	            
+	              default footer	              
+	            </slot>
+	            <b-btn v-on:click="$emit('close')">
+	              Cerrar
+	            </b-btn>         
 	          </div>
 	          
 	        </div>

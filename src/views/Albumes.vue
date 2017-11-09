@@ -1,21 +1,35 @@
 <template>
   <div>
     {{ texto }}
-    <br><br>
+    <br><br>  
+    
     <span v-if="datos == null">
       <label for="">Token</label>
       <input type="text" v-model="token" size="70" ><button v-on:click="getRest()">buscar</button>
     </span>
     <br><br>
     <div v-if="datos != null">
-      <label for="">Buscar</label>
-      <input type="search" v-model="item">
-      <ol>
-        <li v-for="datos in filteredItems">
-          <p>Cantante: {{ datos.artists[0].name }}</p>
-          <button id="show-modal" v-on:click="showModal(datos)">Show Modal</button>
-        </li>
-      </ol>
+      <b-col cols="4" align-self="center" offset-md="4">
+      <b-form-input v-model="item"                  
+        type="search"
+        placeholder="Buscar">
+        
+      </b-form-input>
+    </b-col>
+      
+
+      <b-container class="bv-example-row">
+        <b-row>                            
+          <b-col cols="3" class="clearfix" v-for="datos in filteredItems">
+            <b-card title="Artista">
+              <p class="card-text">
+                {{ datos.artists[0].name }}
+              </p>
+              <b-btn id="v-b-modal" v-on:click="showModal(datos)" variant="primary">Detalles </b-btn>
+            </b-card>          
+          </b-col>
+        </b-row>
+      </b-container>
     </div>
    
 
@@ -26,14 +40,23 @@
         you can use custom content here to overwrite
         default content
       -->
-      <h3 slot="header">{{ artista }}</h3>
-      <p slot="body"> 
-        Cancion: {{ cancion }}        
+      <h5 slot="header">Artista: {{ artista }}</h5>
+      <p slot="body">         
+          <slot name="body">            
+            <b-col align-self="center">Canción</b-col>
+            <b-alert show>              
+              {{ cancion }}              
+            </b-alert>  
+            <b-col align-self="center">Duración</b-col>
+            <b-badge>
+            {{ duracion }} 
+            </b-badge> 
+          </slot>           
       </p>
-      <p>
-        <a :href="preview" target="_blank">Escuchar online</a>
-      </p>
-      <h4 slot="footer">{{ duracion }}</h4>
+
+      <h5 slot="footer">
+        <a :href="preview" target="_blank">Escuchar online</a> 
+      </h5>
     </modal>
     <br><br>
   </div>
@@ -62,7 +85,7 @@ export default {
       duracion: null,
       preview: null, 
       footer: 'Footer del Album',
-      token: 'BQDMtirPx3oSjo4njKPMl91q4f_EBvpn6mEZ3URrOKt_bjmh4AYeOzIcGOxmPfX0sQJSw3e9b4lPHyyJUMAQodaWAd68EOE0RQIiOPRg34VgVUb2PH31SG_ThMGqQRfV8Zkni1c7Rmc8mBntXdcy5pPInssDVgYLplj4pAs4IH0-1G_7Tjs&refresh_token=AQA3PDAtNtHpTCmpEaOhYGgqK3A8tK1wC7etRGaqwDzTMA_Aj0z3pb9xzbX1WmaM-R8ysjFFiTCyJW1VXSDZSCTYncM5uLEitL-0VIFXarwuy0HlG47Oof0unLSBmsonN9E',
+      token: 'BQDgJkNHBs9nbsuBRs9uG3S57lRwTwhKHoi-c3kU5yjWFupePXFKaOxlKB4nS6x0Yl5CXuUPlRuuU3AwS2b8g73t6aDtKX6Rc5AGDwgFB9nnXpnIv1PMY5R_fNYSOF3ifUmD2mpuTiWUKeRJT7PTAfRRmAGNJti6Gu_lpwQAhYLMLFgZncI&refresh_token=AQCE70SCAFMQHFLvx7K8qxjEZCCiJLZvtizdmkITlr3W2ZVbU3V-OQ-TEYm_8kMtCNCKrSedrjnOLJ82rl6BZJwegfrQRBsr5dADtFnq5UM-yJQFl8u7qjFU9_-rxwG9OtI',
     }
   },
   methods: {
@@ -118,9 +141,8 @@ export default {
 }
 </script>
 
-<style lang="scss">
-  .modal-header h3 {
-    margin-top: 0;
-    color: blue;
-  } 
+<style lang="scss"> 
+  .clearfix{
+    margin: 15px 0px;
+  }
 </style>
