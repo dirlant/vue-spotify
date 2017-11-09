@@ -4,18 +4,29 @@
     <br><br>  
     
     <span v-if="datos == null">
-      <label for="">Token</label>
-      <input type="text" v-model="token" size="70" ><button v-on:click="getRest()">buscar</button>
+      <b-col cols="4" align-self="center" offset-md="4">
+        <b-form-input v-model="token"                  
+          placeholder="Agrega tu token"
+          type="text"
+          size="70" >
+           
+          
+        </b-form-input>
+        <br>
+        <b-btn v-on:click="getRest()">
+          Comenzar
+        </b-btn>
+      </b-col>
     </span>
     <br><br>
     <div v-if="datos != null">
       <b-col cols="4" align-self="center" offset-md="4">
-      <b-form-input v-model="item"                  
-        type="search"
-        placeholder="Buscar">
-        
-      </b-form-input>
-    </b-col>
+        <b-form-input v-model="item"                  
+          type="search"
+          placeholder="Buscar">
+          
+        </b-form-input>
+      </b-col>
       
 
       <b-container class="bv-example-row">
@@ -85,7 +96,7 @@ export default {
       duracion: null,
       preview: null, 
       footer: 'Footer del Album',
-      token: 'BQDgJkNHBs9nbsuBRs9uG3S57lRwTwhKHoi-c3kU5yjWFupePXFKaOxlKB4nS6x0Yl5CXuUPlRuuU3AwS2b8g73t6aDtKX6Rc5AGDwgFB9nnXpnIv1PMY5R_fNYSOF3ifUmD2mpuTiWUKeRJT7PTAfRRmAGNJti6Gu_lpwQAhYLMLFgZncI&refresh_token=AQCE70SCAFMQHFLvx7K8qxjEZCCiJLZvtizdmkITlr3W2ZVbU3V-OQ-TEYm_8kMtCNCKrSedrjnOLJ82rl6BZJwegfrQRBsr5dADtFnq5UM-yJQFl8u7qjFU9_-rxwG9OtI',
+      token: '',
     }
   },
   methods: {
