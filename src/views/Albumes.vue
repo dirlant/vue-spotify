@@ -1,32 +1,39 @@
 <template>
   <div>
     {{ texto }}
-    <input type="text" v-model="token" size="70"><button v-on:click="getRest()">buscar</button>
     <br><br>
-    <label for="">Buscar</label>
-    <input type="search" v-model="item">
-    <div id="albumes">
+    <span v-if="datos == null">
+      <label for="">Token</label>
+      <input type="text" v-model="token" size="70" ><button v-on:click="getRest()">buscar</button>
+    </span>
+    <br><br>
+    <div v-if="datos != null">
+      <label for="">Buscar</label>
+      <input type="search" v-model="item">
       <ol>
-        <li v-for="(dato, key, value) in datos">
-          <p>{{ dato.id }} </p>
-          <p>Cantante: {{ dato.artists[0].name }} </p>
-          <p>Nombre de la canción: {{ dato.name }} </p>
-          <p>Duración: {{ secondsToTime(dato.duration_ms) }}</p>
-          <a :href="dato.preview_url" target="_blank">Escuchar online</a>                     
+        <li v-for="datos in filteredItems">
+          <p>Cantante: {{ datos.artists[0].name }}</p>
+          <button id="show-modal" v-on:click="showModal(datos)">Show Modal</button>
         </li>
       </ol>
-    </div>    
+    </div>
+   
 
-    <button id="show-modal" v-on:click="showModal = true">Show Modal</button>
+    
     <!-- use the modal component, pass in the prop -->
-    <modal v-if="showModal" v-on:close="showModal = false">
+    <modal v-if="show_modal" v-on:close="show_modal = false">
       <!--
         you can use custom content here to overwrite
         default content
       -->
-      <h3 slot="header">{{ header }}</h3>
-      <p slot="body"> {{ body }}</p>
-      <h4 slot="footer">{{ footer }}</h4>
+      <h3 slot="header">{{ artista }}</h3>
+      <p slot="body"> 
+        Cancion: {{ cancion }}        
+      </p>
+      <p>
+        <a :href="preview" target="_blank">Escuchar online</a>
+      </p>
+      <h4 slot="footer">{{ duracion }}</h4>
     </modal>
     <br><br>
   </div>
@@ -43,15 +50,19 @@ export default {
   },
   data () {
     return {
-      texto: 'Token',
+      texto: 'Albumes',
       spotify: null,
-      datos: {},
-      item: null,
-      showModal: false,
+      datos: null,
+      item: '', 
+      show_modal: false,     
       header: 'Titulo del Abum',
       body: 'Cuerpo del Album',
+      artista: null,
+      cancion: null,
+      duracion: null,
+      preview: null, 
       footer: 'Footer del Album',
-      token: null,
+      token: 'BQDMtirPx3oSjo4njKPMl91q4f_EBvpn6mEZ3URrOKt_bjmh4AYeOzIcGOxmPfX0sQJSw3e9b4lPHyyJUMAQodaWAd68EOE0RQIiOPRg34VgVUb2PH31SG_ThMGqQRfV8Zkni1c7Rmc8mBntXdcy5pPInssDVgYLplj4pAs4IH0-1G_7Tjs&refresh_token=AQA3PDAtNtHpTCmpEaOhYGgqK3A8tK1wC7etRGaqwDzTMA_Aj0z3pb9xzbX1WmaM-R8ysjFFiTCyJW1VXSDZSCTYncM5uLEitL-0VIFXarwuy0HlG47Oof0unLSBmsonN9E',
     }
   },
   methods: {
@@ -74,7 +85,8 @@ export default {
     },
     getRest(){
       axios.get(
-      'https://api.spotify.com/v1/artists/43ZHCT0cAZBISjO8DG9PnE/top-tracks?country=SE', {
+      //'https://api.spotify.com/v1/artists/43ZHCT0cAZBISjO8DG9PnE/top-tracks?country=SE', {
+      'https://api.spotify.com/v1/recommendations?seed_artists=4NHQUGzhtTLFvgF5SZesLK&seed_tracks=0c6xIDDpzE81m2q797ordA&min_energy=0.4&min_popularity=50&market=US', {
           headers: {
             'Authorization': `Bearer ${this.token}`
           }
@@ -86,10 +98,22 @@ export default {
       .catch((error) => {
         console.log(error);
       });
-    }
+
+    },
+    showModal(req){
+      this.show_modal = true;
+      this.artista = req.artists[0].name;
+      this.cancion = req.name;
+      this.duracion = this.secondsToTime(req.duration_ms);
+      this.preview = req.preview_url;
+    },    
   },
   computed : {
-
+    filteredItems: function () {
+      return this.datos.filter((dato) => {
+         return dato.artists[0].name.includes(this.item);
+      })
+    }
   }
 }
 </script>
