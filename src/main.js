@@ -20,7 +20,7 @@ import Albumes from './views/Albumes.vue'
 const routes = [  
   //{path: '/albumes' , component: Albumes},
   {path: '/login', name: 'login' , component: Login},
-  {path: '/albumes', name: 'albumes' , component: Albumes},
+  {path: '/', name: 'albumes' , component: Albumes},
 ];
 
 const router = new VueRouter({
